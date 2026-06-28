@@ -1,5 +1,5 @@
 placement-preparation-copilot
-backend/
+server/
 ├── src/
 │   ├── config/
 │   │   └── db.js                 # MongoDB connection
