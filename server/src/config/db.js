@@ -1,13 +1,21 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI);
+    const mongoURI = process.env.MONGODB_URI;
+
+    if (!mongoURI) {
+      throw new Error('MONGODB_URI is not defined in your .env file');
+    }
+
+    // Mongoose 9.x handles connection options automatically
+    const conn = await mongoose.connect(mongoURI);
+
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
-    console.error(`MongoDB connection error: ${error.message}`);
-    process.exit(1); // Exit process with failure - no point running server without DB
+    console.error(`MongoDB Connection Error: ${error.message}`);
+    process.exit(1);
   }
 };
 
-module.exports = connectDB;
+export default connectDB;
